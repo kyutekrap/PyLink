@@ -1,8 +1,7 @@
 from Link import CreateFlow, CreateStep, Debugger, GetStep, Decision
 
 
-def api_example():
-    CreateFlow("Flow", [
+code = CreateFlow("Flow", [
         CreateStep.ExampleCustomMethod("Step1", {
             "$table": "people",
             "$values": {
@@ -24,4 +23,4 @@ def api_example():
     ])
 
 
-api_example()
+print(code)
