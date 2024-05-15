@@ -2,7 +2,6 @@ import functools
 import time
 
 from .property import Property
-from Link.scripts.custom_logger import Logger
 
 
 class Helper:
@@ -33,8 +32,6 @@ class Helper:
                 except Exception as e:
                     if self.debug:
                         Property.logger.error(f"{str(e)}\n")
-                    else:
-                        Logger.sys_message.append(str(e))
 
                 self.after_execute(result, *args, **kwargs)
 
