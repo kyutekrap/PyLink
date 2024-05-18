@@ -1,5 +1,3 @@
-import threading
-
 from .logger import Logger
 
 
