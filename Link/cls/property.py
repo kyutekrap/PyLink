@@ -7,4 +7,3 @@ class Property:
     results = dict()
     next = None
     logger = Logger()
-    steps = dict()
