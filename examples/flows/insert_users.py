@@ -1,8 +1,9 @@
 from Link import CreateFlow, CreateStep, Debugger, GetStep, Decision
 
 
-code = CreateFlow("Flow", [
-        CreateStep.ExampleCustomMethod("Step1", {
+def insert_users():
+    return CreateFlow("Insert Users", [
+        CreateStep.Insert("Step1", {
             "$table": "people",
             "$values": {
                 "name": ["Kate Park", "Peter Parker"],
@@ -13,7 +14,7 @@ code = CreateFlow("Flow", [
         Decision({
             "End": GetStep("Step1", "affected_rows") == 0
         }),
-        CreateStep.ExampleCustomMethod("Step1-1", {
+        CreateStep.Insert("Step1-1", {
             "$table": "schools",
             "$values": {
                 "name": ["MIT", "CIT"],
@@ -21,6 +22,3 @@ code = CreateFlow("Flow", [
             }
         }, Debug=True)
     ])
-
-
-print(code)

@@ -1,13 +1,9 @@
-from Link.cls.property import Property
+from Link import Property
 
 
 def CreateFlow(name: str, flow: list, **kwargs) -> str:
     """
-    Succeeds after all the Steps
-    :param name: Name of Flow
-    :param flow: All the Steps
-    :param kwargs:
-    :return: Log output
+    Succeeds after all the Steps. Kills globals.
     """
     global Property
 

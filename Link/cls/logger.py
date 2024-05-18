@@ -4,9 +4,6 @@ import logging
 
 class Logger:
     def __init__(self):
-        """
-        Log to StringIO
-        """
         self.stream = io.StringIO()
         self.handler = logging.StreamHandler(self.stream)
 
@@ -14,7 +11,7 @@ class Logger:
         self.handler.setFormatter(formatter)
 
         self.log = logging.getLogger()
-        self.log.setLevel(logging.INFO)
+        self.log.setLevel(logging.DEBUG)
         self.log.addHandler(self.handler)
 
     def info(self, message: str) -> None:
