@@ -1,4 +1,5 @@
-from Link.cls.property import Property
+from Link import Props
+import inspect
 
 
 def GetStep(name: str, key: str):
@@ -7,5 +8,7 @@ def GetStep(name: str, key: str):
     :param key: Key to reference
     :return: None, else respective value
     """
-    step = Property.results.get(name)
-    return step[key] if step else None
+    pid = id(inspect.stack()[1].function)
+    step = Props.get_results(pid, name)
+    if step:
+        return step.get(key, None)

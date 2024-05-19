@@ -8,6 +8,7 @@ __all__ = [
     'GetStep',
     'CreateStep',
     'register_step',
-    'Property',
-    'Logger'
+    'Props',
+    'Logger',
+    'register_flow'
 ]

@@ -1,4 +1,5 @@
-from Link.cls.property import Property
+from Link import Props
+import inspect
 
 
 def Decision(params: dict):
@@ -6,7 +7,8 @@ def Decision(params: dict):
     Conditional statement
     :param params: { name of step : bool }
     """
+    pid = id(inspect.stack()[1].function)
     for key, value in params.items():
         if value:
-            Property.next = key
+            Props.set_next(pid, key)
             break

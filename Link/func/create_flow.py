@@ -1,13 +1,13 @@
-from Link import Property
+from Link import Props
+import inspect
 
 
 def CreateFlow(name: str, flow: list, **kwargs) -> str:
     """
-    Succeeds after all the Steps. Kills globals.
+    Succeeds after all the Steps.
     """
-    global Property
-
-    debug_log = Property.logger.flush()
-    Property.logger.exit()
-    del Property
+    pid = id(inspect.stack()[1].function)
+    debug_log = Props.get_logger(pid).flush()
+    Props.get_logger(pid).exit()
+    Props.del_item(pid)
     return debug_log

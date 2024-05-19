@@ -1,6 +1,7 @@
-from Link import CreateFlow, CreateStep, Debugger, GetStep, Decision
+from Link import CreateFlow, CreateStep, Debugger, GetStep, Decision, register_flow
 
 
+@register_flow()
 def insert_users():
     return CreateFlow("Insert Users", [
         CreateStep.Insert("Step1", {
