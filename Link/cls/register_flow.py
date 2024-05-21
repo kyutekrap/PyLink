@@ -8,7 +8,7 @@ class register_flow:
     def __call__(self, func):
         def wrapper(*args, **kwargs):
 
-            Props(id(func.__name__))
+            Props()
 
             return func(*args, **kwargs)
         return wrapper

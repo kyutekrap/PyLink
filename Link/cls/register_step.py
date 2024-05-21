@@ -1,5 +1,4 @@
 import time
-import inspect
 
 from .property import Props
 from .create_step import CreateStep
@@ -21,8 +20,6 @@ class register_step:
         def wrapper(name: str, params: dict, *args, **kwargs):
             result = None
 
-            self.id = id(inspect.stack()[1].function)
-
             self.debug = kwargs.get('Debug')
             self.persist = kwargs.get('Persist')
 
@@ -32,7 +29,7 @@ class register_step:
                     result = func(name, params, **kwargs)
                 except Exception as e:
                     if self.debug:
-                        Props.get_logger(self.id).error(f"{str(e)}\n")
+                        Props.get_logger().error(f"{str(e)}\n")
 
                 self.after_execute(name, result)
 
@@ -45,7 +42,7 @@ class register_step:
         """
         :return: Validates conditional skipping of Step
         """
-        exec = False if Props.get_next(self.id) and Props.get_next(self.id) is not name else True
+        exec = False if Props.get_next() and Props.get_next() is not name else True
         if self.debug:
             self.start_time = time.time() * 1000
         return exec
@@ -55,7 +52,7 @@ class register_step:
         End of Step exec, kills self
         """
         if self.start_time:
-            Props.get_logger(self.id).info(f'{name} - Process Time: {str(time.time() * 1000 - self.start_time)}')
+            Props.get_logger().info(f'{name} - Process Time: {str(time.time() * 1000 - self.start_time)}')
         if self.persist:
-            Props.set_results(self.id, name, result)
+            Props.set_results(name, result)
         del self

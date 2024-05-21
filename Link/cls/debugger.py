@@ -1,5 +1,4 @@
 from .property import Props
-import inspect
 
 
 class Debugger:
@@ -9,4 +8,4 @@ class Debugger:
         :param message: Custom message to log
         :return: Printed via built-in logging module with DEBUG tag
         """
-        Props.get_logger(id(inspect.stack()[1].function)).debug(message)
+        Props.get_logger().debug(message)

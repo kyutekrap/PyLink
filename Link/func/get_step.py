@@ -1,5 +1,4 @@
 from Link import Props
-import inspect
 
 
 def GetStep(name: str, key: str):
@@ -8,7 +7,6 @@ def GetStep(name: str, key: str):
     :param key: Key to reference
     :return: None, else respective value
     """
-    pid = id(inspect.stack()[1].function)
-    step = Props.get_results(pid, name)
+    step = Props.get_results(name)
     if step:
         return step.get(key, None)

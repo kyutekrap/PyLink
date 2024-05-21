@@ -1,42 +1,42 @@
+import threading
+
 from .logger import Logger
 
 
-class Props:
-    _results = None
-    _next = None
-    _logger = None
+class Props(threading.local):
+    _local_storage = threading.local()
 
-    def __init__(self, id: int):
-        Props._results = {id: dict()}
-        Props._next = {id: dict()}
-        Props._logger = {id: Logger()}
-
-    @staticmethod
-    def set_results(id: int, key: str, val: str):
-        Props._results[id][key] = val
+    def __init__(self):
+        self._local_storage.__dict__.update({
+            "results": dict(),
+            "next": dict(),
+            "logger": Logger()
+        })
 
     @staticmethod
-    def get_results(id: int, key: str):
-        return Props._results.get(id).get(key)
+    def set_results(key: str, val: str):
+        Props._local_storage.results[key] = val
 
     @staticmethod
-    def set_next(id: int, val: str):
-        Props._next[id] = val
+    def get_results(key: str):
+        return Props._local_storage.results.get(key, None)
 
     @staticmethod
-    def get_next(id: int):
-        return Props._next.get(id)
+    def set_next(val: str):
+        Props._local_storage.next = val
 
     @staticmethod
-    def set_logger(id: int):
-        return Props._logger[id]
+    def get_next():
+        return getattr(Props._local_storage, "next", None)
 
     @staticmethod
-    def get_logger(id: int):
-        return Props._logger.get(id)
+    def _set_logger():
+        Props._local_storage.logger = Logger()
 
     @staticmethod
-    def del_item(id: int):
-        Props._results.pop(id)
-        Props._next.pop(id)
-        Props._logger.pop(id)
+    def get_logger():
+        return getattr(Props._local_storage, "logger")
+
+    @staticmethod
+    def del_item():
+        del Props._local_storage
