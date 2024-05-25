@@ -51,7 +51,7 @@ class register_step:
         """
         End of Step exec, kills self
         """
-        if self.start_time:
+        if self.debug:
             Props.get_logger().info(f'{name} - Process Time: {str(time.time() * 1000 - self.start_time)}')
         if self.persist:
             Props.set_results(name, result)
