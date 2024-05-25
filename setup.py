@@ -1,8 +1,9 @@
 from setuptools import setup, find_packages
 
+
 setup(
     name='Link',
     version='0.0.5',
-    py_modules=find_packages(),
+    packages=['Link', 'Link.cls', 'Link.func'],
     url='https://github.com/kyutekrap/Link'
 )
