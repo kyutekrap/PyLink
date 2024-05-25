@@ -1,4 +1,4 @@
-from Link import CreateFlow, CreateStep, Debugger, GetStep, Decision, register_flow
+from Link import CreateFlow, CreateStep, Debugger, GetStep, Decision, register_flow, System
 
 
 @register_flow()
@@ -13,7 +13,7 @@ def insert_users():
         }, Persist=True, Debug=True),
         Debugger.log(GetStep("Step1", "affected_rows")),
         Decision({
-            "End": GetStep("Step1", "affected_rows") == 0
+            System.Die: GetStep("Step1", "affected_rows") == 0
         }),
         CreateStep.Insert("Step1-1", {
             "$table": "schools",
