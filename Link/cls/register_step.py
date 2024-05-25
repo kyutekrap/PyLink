@@ -2,34 +2,32 @@ import time
 
 from .property import Props
 from .create_step import CreateStep
+from .system import System
 
 
 class register_step:
     def __init__(self):
         """
         Wrapper class to implement before & after methods for CreateStep
-        :param args: *
-        :param kwargs: Available [Debug: bool, Persist: bool]
-        Debug - logs processing time for a Step
-        Persist - saves Step returns in Props
         """
         self.persist = None
         self.debug = None
 
     def __call__(self, func):
-        def wrapper(name: str, params: dict, *args, **kwargs):
+        def wrapper(name: str, params: dict, Debug=False, Persist=False):
             result = None
 
-            self.debug = kwargs.get('Debug')
-            self.persist = kwargs.get('Persist')
+            self.debug = Debug
+            self.persist = Persist
 
             if self.before_execute(name):
 
                 try:
-                    result = func(name, params, **kwargs)
+                    result = func(name, params, Debug=Debug, Persist=Persist)
                 except Exception as e:
                     if self.debug:
                         Props.get_logger().error(f"{str(e)}\n")
+                        Props.set_next(System.Die)
 
                 self.after_execute(name, result)
 
