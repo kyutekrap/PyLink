@@ -11,9 +11,9 @@ def insert_users():
                 "number": ["1234567899", "1234567899"]
             }
         }, Persist=True, Debug=True),
-        Debugger.log(GetStep("Step1", "affected_rows")),
+        Debugger.log(GetStep("Step1")["affected_rows"]),
         Decision({
-            System.Die: GetStep("Step1", "affected_rows") == 0
+            System.Die: GetStep("Step1")["affected_rows"] == 0
         }),
         CreateStep.Insert("Step1-1", {
             "$table": "schools",
