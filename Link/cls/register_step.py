@@ -26,7 +26,7 @@ class register_step:
                     result = func(name, params, Debug=Debug, Persist=Persist)
                 except Exception as e:
                     if self.debug:
-                        Props.get_logger().error(f"{str(e)}\n")
+                        Props.get_logger().error(str(e))
                         Props.set_next(System.Die)
 
                 self.after_execute(name, result)

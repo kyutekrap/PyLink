@@ -1,34 +1,22 @@
 import io
-import logging
 
 
 class Logger:
     def __init__(self):
         self.stream = io.StringIO()
-        self.handler = logging.StreamHandler(self.stream)
-
-        formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
-        self.handler.setFormatter(formatter)
-
-        self.log = logging.getLogger()
-        self.log.setLevel(logging.DEBUG)
-        self.log.addHandler(self.handler)
 
     def info(self, message: str) -> None:
-        self.log.info(message)
+        self.stream.write(f'INFO - {message}\n')
 
     def debug(self, message: str) -> None:
-        self.log.debug(message)
+        self.stream.write(f'DEBUG - {message}\n')
 
     def error(self, message: str) -> None:
-        self.log.error(message)
+        self.stream.write(f'ERROR - {message}\n')
 
     def flush(self) -> str:
-        self.handler.flush()
         return self.stream.getvalue()
 
     def exit(self) -> None:
-        self.log.removeHandler(self.handler)
-        self.handler.close()
+        self.stream.close()
         del self
-        

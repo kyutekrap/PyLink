@@ -7,7 +7,7 @@ class Props(threading.local):
     _local_storage = threading.local()
 
     def __init__(self):
-        self._local_storage.__dict__.update({
+        Props._local_storage.__dict__.update({
             "results": dict(),
             "next": dict(),
             "logger": Logger()
@@ -39,4 +39,4 @@ class Props(threading.local):
 
     @staticmethod
     def del_item():
-        del Props._local_storage
+        Props._local_storage.__dict__.clear()
