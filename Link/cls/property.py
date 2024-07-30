@@ -1,42 +1,36 @@
 import threading
 
-from .logger import Logger
 
-
-class Props(threading.local):
+class create_local_storage(threading.local):
     _local_storage = threading.local()
 
     def __init__(self):
-        Props._local_storage.__dict__.update({
-            "results": dict(),
-            "next": dict(),
-            "logger": Logger()
+        """
+        Create local storage
+        Persist results and flag steps
+        Access property statically
+        """
+        create_local_storage._local_storage.__dict__.update({
+            "_results": dict(),
+            "_jump": dict()
         })
 
     @staticmethod
     def set_results(key: str, val: str):
-        Props._local_storage.results[key] = val
+        create_local_storage._local_storage._results[key] = val
 
     @staticmethod
     def get_results(key: str):
-        return Props._local_storage.results.get(key, None)
+        return create_local_storage._local_storage._results.get(key, None)
 
     @staticmethod
-    def set_next(val: str):
-        Props._local_storage.next = val
+    def set_jump(val: str):
+        create_local_storage._local_storage.set_jump = val
 
     @staticmethod
-    def get_next():
-        return getattr(Props._local_storage, "next", None)
+    def get_jump():
+        return getattr(create_local_storage._local_storage, "_jump", None)
 
     @staticmethod
-    def _set_logger():
-        Props._local_storage.logger = Logger()
-
-    @staticmethod
-    def get_logger():
-        return getattr(Props._local_storage, "logger")
-
-    @staticmethod
-    def del_item():
-        Props._local_storage.__dict__.clear()
+    def clear():
+        create_local_storage._local_storage.__dict__.clear()

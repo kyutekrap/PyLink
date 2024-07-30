@@ -1,4 +1,4 @@
-from .property import Props
+from .property import create_local_storage
 
 
 class register_flow:
@@ -8,7 +8,7 @@ class register_flow:
     def __call__(self, func):
         def wrapper(*args, **kwargs):
 
-            Props()
+            create_local_storage()
 
             return func(*args, **kwargs)
         return wrapper

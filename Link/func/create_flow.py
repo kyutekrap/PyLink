@@ -1,11 +1,8 @@
-from Link import Props
+from Link import create_local_storage
 
 
-def CreateFlow(name: str, flow: list, **kwargs) -> str:
+def CreateFlow(name: str, flow: list, **kwargs) -> None:
     """
-    Succeeds after all the Steps.
+    Execute last
     """
-    debug_log = Props.get_logger().flush()
-    Props.get_logger().exit()
-    Props.del_item()
-    return debug_log
+    create_local_storage.clear()

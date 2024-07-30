@@ -1,1 +1,1 @@
-from .insert import Insert
+from .insert import CRUD

@@ -1,1 +1,1 @@
-from .insert_users import insert_users
+from .insert_users import InsertUsers

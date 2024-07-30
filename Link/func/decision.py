@@ -1,4 +1,4 @@
-from Link import Props
+from Link import create_local_storage
 
 
 def Decision(params: dict):
@@ -8,5 +8,5 @@ def Decision(params: dict):
     """
     for key, value in params.items():
         if value:
-            Props.set_next(key)
+            create_local_storage.set_jump(key)
             break
