@@ -1,7 +1,7 @@
 from Link import create_local_storage
 
 
-def CreateFlow(name: str, flow: list, **kwargs) -> None:
+def CreateFlow(flow: list) -> None:
     """
     Execute last
     """
