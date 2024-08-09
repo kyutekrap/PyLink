@@ -10,5 +10,6 @@ __all__ = [
     'register_step',
     'create_local_storage',
     'register_flow',
-    'System'
+    'System',
+    'CodeBlock'
 ]

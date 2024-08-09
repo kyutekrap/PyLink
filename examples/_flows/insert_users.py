@@ -1,4 +1,5 @@
 from Link import *
+import matplotlib.pyplot as plt
 
 
 class InsertUsers:
@@ -16,6 +17,12 @@ class InsertUsers:
                 }
             }),
             Debugger.log(GetStep("Insert")["affected_rows"]),
+            CodeBlock([
+                plt.scatter([0], [GetStep("Insert")["affected_rows"]], label="Affected Rows"),
+                plt.title("My Test"),
+                plt.legend(),
+                plt.grid()
+            ]),
             Decision({
                 System.Die: GetStep("Insert")["affected_rows"] == 0
             })
@@ -31,5 +38,8 @@ class InsertUsers:
                     "name": ["MIT", "CIT"],
                     "location": ["E Jefferson St", "N Jefferson St"]
                 }
-            })
+            }),
+            CodeBlock([
+                plt.show()
+            ])
         ])
