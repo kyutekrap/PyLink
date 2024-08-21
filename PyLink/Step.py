@@ -2,11 +2,9 @@ import time
 import logging
 from typing import Any
 from .property import create_local_storage
-from .create_step import CreateStep
-from .system import System
 
 
-class register_step:
+class Step:
     def __init__(self, Debug=False):
         """
         Wrapper class to implement before & after methods for CreateStep
@@ -15,28 +13,34 @@ class register_step:
         self.debug = Debug
 
     def __call__(self, func):
+        """
+        Implement before and after execution
+        Register function to Step
+        :param func: Decorated function
+        :return: Function after decoration
+        """
         name = func.__name__
+
         def wrapper(*args, **kwargs):
             result = None
-            if self.before_execute(name):
-                try:
-                    result = func(*args, **kwargs)
-                except Exception as e:
-                    logging.error(e)
-                    create_local_storage.set_jump(System.Die)
-                self.after_execute(name, result)
+            self.before_execute()
+            try:
+                result = func(*args, **kwargs)
+            except Exception as e:
+                logging.error(e)
+            self.after_execute(name, result)
             return result
-        setattr(CreateStep, name, wrapper)
+
+        setattr(Step, name, wrapper)
         return wrapper
 
-    def before_execute(self, name: str) -> bool:
+    def before_execute(self) -> None:
         """
-        Set start time and validate step
-        :return: If valid step
+        Set start time
+        :return:
         """
         if self.debug:
             self.start_time = time.time() * 1000
-        return False if create_local_storage.get_jump() and create_local_storage.get_jump() is not name else True
 
     def after_execute(self, name: str, result: Any):
         """

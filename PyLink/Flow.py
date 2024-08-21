@@ -3,7 +3,7 @@ import time
 import logging
 
 
-class register_flow:
+class Flow:
     def __init__(self, Debug=False):
         """
         Wrapper class to implement before & after methods for CreateFlow
@@ -12,12 +12,22 @@ class register_flow:
         self.debug = Debug
 
     def __call__(self, func):
+        """
+        Implement before and after execution
+        Register function to Flow
+        :param func: Decorated function
+        :return: Function after decoration
+        """
+        name = func.__name__
+
         def wrapper(*args, **kwargs):
             self.before_execute()
             create_local_storage()
             result = func(*args, **kwargs)
-            self.after_execute(func.__name__)
+            self.after_execute(name)
             return result
+
+        setattr(Flow, name, wrapper)
         return wrapper
 
     def before_execute(self) -> None:
@@ -29,8 +39,9 @@ class register_flow:
 
     def after_execute(self, name: str) -> None:
         """
-        End of Flow exec, kill self
+        End of Flow exec, clear storage, kill self
         """
         if self.debug:
             logging.info(f'{name} - Process Time: {time.time() * 1000 - self.start_time}')
+        create_local_storage.clear()
         del self

@@ -1,4 +1,4 @@
-from Link import register_step
+from PyLink import Step
 from typing import TypedDict, Dict
 
 
@@ -9,7 +9,7 @@ class InsertProps(TypedDict):
 
 class CRUD:
     @staticmethod
-    @register_step(Debug=True)
+    @Step(Debug=True)
     def Insert(params: InsertProps) -> dict | None:
         list_of_tuples = list((a, b) for a, b in list(zip(*params.get("values").values())))
         list_of_tuples = str(list_of_tuples)[1:-1]

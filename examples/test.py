@@ -1,5 +1,6 @@
 from _flows import *
 from _steps import *
+from PyLink import Flow
 import logging
 
 logger = logging.getLogger()
@@ -11,4 +12,4 @@ logger.addHandler(stream_handler)
 
 
 if __name__ == '__main__':
-    InsertUsers()
+    Flow.InsertUsers()

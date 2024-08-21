@@ -1,4 +1,4 @@
-from Link import create_local_storage
+from .property import create_local_storage
 
 
 def GetStep(name: str):
