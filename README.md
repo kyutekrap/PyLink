@@ -1,6 +1,6 @@
-# Link
+# PyLink
 
-Python with a lot of brackets
+Library to help you write clean-code
 
 <br>
 
