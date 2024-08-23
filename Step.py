@@ -23,24 +23,27 @@ class Step:
 
         def wrapper(*args, **kwargs):
             result = None
-            self.before_execute()
-            try:
-                result = func(*args, **kwargs)
-            except Exception as e:
-                logging.error(e)
-            self.after_execute(name, result)
+            if self.before_execute(name):
+                try:
+                    result = func(*args, **kwargs)
+                except Exception as e:
+                    logging.error(e)
+                self.after_execute(name, result)
             return result
 
         setattr(Step, name, wrapper)
         return wrapper
 
-    def before_execute(self) -> None:
+    def before_execute(self, name: str) -> bool:
         """
         Set start time
-        :return:
+        Validate step
+        :return: If valid
         """
         if self.debug:
             self.start_time = time.time() * 1000
+        next_step = create_local_storage.get_next()
+        return next_step == name if next_step is not None else True
 
     def after_execute(self, name: str, result: Any):
         """

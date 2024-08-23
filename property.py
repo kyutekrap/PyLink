@@ -5,7 +5,18 @@ class create_local_storage(threading.local):
     _local_storage = threading.local()
 
     def __init__(self):
-        pass
+        create_local_storage._local_storage.__dict__.update({
+            "res": {},
+            "nxt": None
+        })
+
+    @staticmethod
+    def set_next(case: str):
+        create_local_storage._local_storage.__dict__["nxt"] = case
+
+    @staticmethod
+    def get_next():
+        return create_local_storage._local_storage.__dict__["nxt"]
 
     @staticmethod
     def set_results(key: str, val: str):
@@ -15,7 +26,7 @@ class create_local_storage(threading.local):
         :param val: Value to store in the thread-local storage
         :return:
         """
-        create_local_storage._local_storage.__dict__[key] = val
+        create_local_storage._local_storage.__dict__["res"][key] = val
 
     @staticmethod
     def get_results(key: str):
@@ -24,7 +35,7 @@ class create_local_storage(threading.local):
         :param key: Key whose associated value needs to be retrieved
         :return:
         """
-        return create_local_storage._local_storage.__dict__.get(key, None)
+        return create_local_storage._local_storage.__dict__["res"].get(key, None)
 
     @staticmethod
     def clear():
