@@ -19,6 +19,7 @@ class Flow:
         self.debug = Debug
         self.run_in_thread = Thread
         self.wait_for_thread = Wait
+        self.next = None
 
     def _init_local_storage(self):
         """
@@ -27,6 +28,8 @@ class Flow:
         """
         if not hasattr(Flow._local_storage, "_initialized"):
             self._initialize_storage()
+        else:
+            self.next = Flow._local_storage._next
 
     def _initialize_storage(self):
         """
@@ -74,20 +77,27 @@ class Flow:
         :param args: The positional arguments to pass to the function.
         :param kwargs: The keyword arguments to pass to the function.
         """
-        self.before_execute()
-        result = func(*args, **kwargs)
-        self.after_execute(name, result, result_queue)
+        result = None
+
+        if self.before_execute(name):
+            result = func(*args, **kwargs)
+            self.after_execute(name, result, result_queue)
 
         return result
 
-    def before_execute(self) -> None:
+    def before_execute(self, name: str) -> bool:
         """
         Set start time for execution.
         Create local storage.
+        Validate flow.
+        :return: If valid
         """
         self.start_time = time.time() * 1000
+
         self._init_local_storage()
         Flow._local_storage._counter += 1
+
+        return self.next == name and type(self.next) is type(name) if self.next is not None else True
 
     def after_execute(self, name: str, result: Any, result_queue: Queue) -> None:
         """

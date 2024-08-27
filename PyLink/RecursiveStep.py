@@ -59,7 +59,7 @@ class RecursiveStep:
                         break
 
             except Exception as e:
-                logging.error(e)
+                logging.error(f"{self.name} - {e}")
                 Flow.set_next(System.Die)
                 break
 

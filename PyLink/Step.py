@@ -30,9 +30,11 @@ class Step:
                     if result is not None:
                         Flow.set_step(name, result)
                     self.after_execute(name)
+
                 except Exception as e:
                     logging.error(f"{name} - {e}")
                     Flow.set_next(System.Die)
+
             return result
 
         wrapper._debug = self.debug
@@ -47,7 +49,7 @@ class Step:
         """
         self.start_time = time.time() * 1000
         next_step = Flow.get_next()
-        return next_step == name if next_step is not None else True
+        return next_step == name and type(next_step) is type(name) if next_step is not None else True
 
     def after_execute(self, name: str):
         """
