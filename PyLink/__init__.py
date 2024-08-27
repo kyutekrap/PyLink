@@ -4,6 +4,9 @@ from .GetStep import GetStep
 from .Debugger import Debugger
 from .System import System
 from .Decision import Decision
+from .RecursiveStep import RecursiveStep
+from .RecursiveFlow import RecursiveFlow
+from .GetFlow import GetFlow
 
 __all__ = [
     "Step",
@@ -11,5 +14,8 @@ __all__ = [
     "GetStep",
     "Debugger",
     "System",
-    "Decision"
+    "Decision",
+    "RecursiveStep",
+    "RecursiveFlow",
+    "GetFlow"
 ]

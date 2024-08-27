@@ -10,15 +10,29 @@ def InsertUsers():
             "number": ["1234567899", "1234567899"]
         }
     })
-    Decision(GetStep("Insert")["affected_rows"], {
-        "Insert": 2,
-        System.Die: not 2
-    })
     Debugger.log(GetStep("Insert")["affected_rows"])
+    RecursiveFlow({
+        "update": 0,
+        "epoch": 2
+    }).CreateIds(1)
+    Debugger.log(GetFlow("CreateIds"))
+
+
+@Flow(Debug=True, Thread=True, Wait=True)
+def CreateIds(x: int) -> int:
+    RecursiveStep({
+        "update": 0,
+        "epoch": 10,
+        "if": "< 100000"
+    }).GenerateId(x)
+    Decision(GetStep("GeneratedId"), {
+        System.Die: 0
+    })
     Step.Insert({
-        "table": "schools",
+        "table": "ids",
         "values": {
-            "name": ["MIT", "CIT"],
-            "location": ["E Jefferson St", "N Jefferson St"]
+            "id": [x],
+            "number": [GetStep("GenerateId")]
         }
     })
+    return x + 1

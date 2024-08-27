@@ -1,13 +1,14 @@
 import time
 import logging
-from typing import Any
-from .property import create_local_storage
+from .Flow import Flow
+from .System import System
+from typing import Callable
 
 
 class Step:
     def __init__(self, Debug=False):
         """
-        Wrapper class to implement before & after methods for CreateStep
+        Class variables
         """
         self.start_time = None
         self.debug = Debug
@@ -26,31 +27,36 @@ class Step:
             if self.before_execute(name):
                 try:
                     result = func(*args, **kwargs)
+                    if result is not None:
+                        Flow.set_step(name, result)
+                    self.after_execute(name)
                 except Exception as e:
-                    logging.error(e)
-                self.after_execute(name, result)
+                    logging.error(f"{name} - {e}")
+                    Flow.set_next(System.Die)
             return result
 
+        wrapper._debug = self.debug
         setattr(Step, name, wrapper)
         return wrapper
 
     def before_execute(self, name: str) -> bool:
         """
-        Set start time
+        Set time
         Validate step
         :return: If valid
         """
-        if self.debug:
-            self.start_time = time.time() * 1000
-        next_step = create_local_storage.get_next()
+        self.start_time = time.time() * 1000
+        next_step = Flow.get_next()
         return next_step == name if next_step is not None else True
 
-    def after_execute(self, name: str, result: Any):
+    def after_execute(self, name: str):
         """
         End of Step exec, kill self
         """
         if self.debug:
-            logging.info(f'{name} - Process Time: {time.time() * 1000 - self.start_time}')
-        if result is not None:
-            create_local_storage.set_results(name, result)
+            logging.info(f"{name} - Process Time: {time.time() * 1000 - self.start_time}ms")
         del self
+
+    @staticmethod
+    def get_debug_flag(func: Callable) -> bool:
+        return getattr(func, "_debug", False)

@@ -1,4 +1,4 @@
-from .property import create_local_storage
+from .Flow import Flow
 
 
 def GetStep(name: str):
@@ -6,4 +6,4 @@ def GetStep(name: str):
     :param name: Name of Step
     :return: None, else respective value
     """
-    return create_local_storage.get_results(name)
+    return Flow.get_step(name)

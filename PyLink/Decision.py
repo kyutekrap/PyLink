@@ -1,5 +1,5 @@
 from typing import Any
-from .property import create_local_storage
+from .Flow import Flow
 
 
 def Decision(x: Any, cases: dict):
@@ -11,4 +11,4 @@ def Decision(x: Any, cases: dict):
     """
     for case, value in cases.items():
         if x == value:
-            create_local_storage.set_next(case)
+            Flow.set_next(case)
