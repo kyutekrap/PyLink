@@ -49,7 +49,10 @@ class Step:
         """
         self.start_time = time.time() * 1000
         next_step = Flow.get_next()
-        return next_step == name and type(next_step) is type(name) if next_step is not None else True
+        is_valid = next_step == name and type(next_step) is type(name) if next_step is not None else True
+        if is_valid:
+            Flow.set_next()
+        return is_valid
 
     def after_execute(self, name: str):
         """

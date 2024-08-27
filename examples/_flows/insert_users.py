@@ -22,7 +22,7 @@ def InsertUsers():
     Debugger.log(GetFlow("CreateIds"))
 
 
-@Flow(Debug=True, Thread=True, Wait=True)
+@Flow(Debug=True, Thread=False, Wait=False)
 def CreateIds(x: int) -> int:
     RecursiveStep({
         "update": 0,

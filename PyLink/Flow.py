@@ -97,7 +97,10 @@ class Flow:
         self._init_local_storage()
         Flow._local_storage._counter += 1
 
-        return self.next == name and type(self.next) is type(name) if self.next is not None else True
+        is_valid = self.next == name and type(self.next) is type(name) if self.next is not None else True
+        if is_valid:
+            Flow.set_next()
+        return is_valid
 
     def after_execute(self, name: str, result: Any, result_queue: Queue) -> None:
         """
@@ -124,7 +127,7 @@ class Flow:
             logging.info(f"{name} - Process Time: {time.time() * 1000 - self.start_time}ms")
 
     @staticmethod
-    def set_next(case: str):
+    def set_next(case: str = None):
         """
         Set the next value in the thread-local storage.
         :param case: The value to set.
