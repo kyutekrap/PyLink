@@ -59,11 +59,11 @@ class RecursiveStep:
                         break
 
             except Exception as e:
-                logging.error(f"{self.name} - {e}")
+                logging.getLogger("PyLink").error(f"{self.name} - {e}")
                 Flow.set_next(System.Die)
                 break
 
         if self.debug:
-            logging.info(f"{self.name} - Total Process Time: {time.time() * 1000 - self.start}ms")
+            logging.getLogger("PyLink").info(f"{self.name} - Total Process Time: {time.time() * 1000 - self.start}ms")
 
         del self

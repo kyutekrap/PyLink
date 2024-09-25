@@ -32,7 +32,7 @@ class Step:
                     self.after_execute(name)
 
                 except Exception as e:
-                    logging.error(f"{name} - {e}")
+                    logging.getLogger("PyLink").error(f"{name} - {e}")
                     Flow.set_next(System.Die)
 
             return result
@@ -59,7 +59,7 @@ class Step:
         End of Step exec, kill self
         """
         if self.debug:
-            logging.info(f"{name} - Process Time: {time.time() * 1000 - self.start_time}ms")
+            logging.getLogger("PyLink").info(f"{name} - Process Time: {time.time() * 1000 - self.start_time}ms")
         del self
 
     @staticmethod

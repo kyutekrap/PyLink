@@ -124,7 +124,7 @@ class Flow:
             del Flow._local_storage._counter
 
         if self.debug:
-            logging.info(f"{name} - Process Time: {time.time() * 1000 - self.start_time}ms")
+            logging.getLogger("PyLink").info(f"{name} - Process Time: {time.time() * 1000 - self.start_time}ms")
 
     @staticmethod
     def set_next(case: str = None):

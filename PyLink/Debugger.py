@@ -8,4 +8,4 @@ class Debugger:
         :param message: Custom message to log
         :return: Printed via built-in logging module with DEBUG tag
         """
-        logging.debug(message)
+        logging.getLogger("PyLink").debug(message)

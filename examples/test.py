@@ -7,7 +7,7 @@ logger = logging.getLogger()
 if logger.hasHandlers():
     logger.handlers.clear()
 
-logger = logging.getLogger()
+logger = logging.getLogger("PyLink")
 logger.setLevel(logging.DEBUG)
 formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
 file_handler = logging.FileHandler("app.log", mode="w")

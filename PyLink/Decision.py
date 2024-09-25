@@ -18,5 +18,5 @@ def Decision(x: Any, cases: dict):
                 break
 
     except Exception as e:
-        logging.error(f"Decision - {e}")
+        logging.getLogger("PyLink").error(f"Decision - {e}")
         Flow.set_next(System.Die)
