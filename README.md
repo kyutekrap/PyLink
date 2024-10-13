@@ -8,7 +8,7 @@ Library to help you write clean-code
 
 * Applied for NeutroCon, a time series analysis library (2024 August)
 
-* Applied for custom workflow in a SaaS Data Management Solution, Datamass (2024 July)
+* Applied for custom workflow in a SaaS Data Management Solution, Magic Board (2024 July)
 
 <br>
 
